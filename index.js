@@ -4,6 +4,11 @@ const fs = require( "fs" )
 const path = require( "path" )
 
 const api = require( "./lib/api" )
+const { initializedb, closedb } = require( "./lib/db" )
+
+// Initialize database
+console.log( "Initializing database..." )
+initializedb()
 
 const publicdirectory = path.join( __dirname, "public" )
 
@@ -17,7 +22,7 @@ function servestaticfile( res, filepath, contenttype ) {
   fs.readFile( filepath, ( err, content ) => {
     if( err ) {
       console.error( "404 file not found: ", filepath )
-      res.writeHead(404, { "Content-Type": "text/plain" })
+      res.writeHead( 404, { "Content-Type": "text/plain" })
       res.end( "404 - Not found" )
     } else {
       res.writeHead( 200, { "Content-Type": contenttype } )
@@ -31,9 +36,9 @@ function servestaticfile( res, filepath, contenttype ) {
  */
 const server = http.createServer( async ( req, res ) => {
 
-  const headers = req.headers;
+  const headers = req.headers
   // @ts-ignore (tls socket encrypted does exist)
-  const protocol = headers[ "x-forwarded-proto" ] || (req.socket.encrypted ? "https" : "http" )
+  const protocol = headers[ "x-forwarded-proto" ] || ( req.socket.encrypted ? "https" : "http" )
   const host = headers[ "x-forwarded-host"] || headers.host
   const baseurl = `${protocol}://${host}`
 
@@ -52,7 +57,7 @@ const server = http.createServer( async ( req, res ) => {
       receivedobj = JSON.parse( data )
     } catch( e ) { /* silent */ }
 
-    if( 0 == pathname.indexOf( "/api/" ) ) {
+    if( 0 === pathname.indexOf( "/api/" ) ) {
       await api.handleapi( parsedurl, res, req, receivedobj )
     } else {
       // If the request is for a static file (HTML, CSS, JS)
@@ -72,10 +77,19 @@ const server = http.createServer( async ( req, res ) => {
       servestaticfile( res, filePath, contentType )
     }
   } )
-})
-
+} )
 
 const port = process.env.PORT || 3000
 server.listen( port, () => {
-  console.log(`Server is running on port ${port}`)
+  console.log( `Server is running on port ${port}` )
+} )
+
+// Graceful shutdown
+process.on( "SIGINT", () => {
+  console.log( "\nShutting down gracefully..." )
+  closedb()
+  server.close( () => {
+    console.log( "Server closed" )
+    process.exit( 0 )
+  } )
 } )

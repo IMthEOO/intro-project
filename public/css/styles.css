@@ -1,18 +1,114 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  /* Primary brand colors */
+  --color-primary: #004d47;
+  --color-primary-light: #00b894;
+  --color-accent: #00916e;
+
+  /* Backgrounds */
+  --color-bg: #f5f7fa;
+  --color-surface: #ffffff;
+  --color-surface-alt: #eef3f7;
+
+  /* Text colors */
+  --color-text: #1e1e1e;
+  --color-text-muted: #6b7280;
+  --color-heading: #0f172a;
+
+  /* Borders and lines */
+  --color-border: #e2e8f0;
+
+  /* Status colors */
+  --color-success: #16a34a;
+  --color-warning: #fbbf24;
+  --color-error: #dc2626;
+
+  /* Chart colors */
+  --chart-green: #00b894;
+  --chart-dark-green: #004d47;
+  --chart-light-green: #66e0c3;
+}
+
 /* Reset some default browser styles */
-body, ul {
+* {
   margin: 0;
   padding: 0;
-  font-family: 'Open Sans', sans-serif; /* Set Open Sans as the default font */
-  font-size: 18px; /* Larger font size for better accessibility */
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+  outline: none;
+  border: none;
+}
+
+.sidebar {
+  width: 260px;
+  height: 100%;
+  position: fixed;
+  background-color: var(--color-bg);
+  border-right: 1px solid var(--color-border);
+  padding: 10px;
+}
+
+.sidebar .logo {
+  padding: 14px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sidebar .nav-links {
+  margin-top: 16px;
+}
+
+.sidebar .nav-links h3 {
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+  padding: 0px 14px;
+}
+
+.sidebar .nav-links .link {
   display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Ensure the body covers the entire viewport height */
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0px 14px;
+  height: 34px;
+  grid-gap: 14px;
+  color: var(--color-text);
+  border-radius: 8px;
+  margin-bottom: 4px;
+}
+
+.sidebar .nav-links .link.active {
+  background-color: var(--color-surface);
+  box-shadow: 0 0 10px 0 var(--color-border);
+  color: var(--color-primary);
+}
+
+.sidebar .nav-links .link .link-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: inherit;
+}
+
+.sidebar .nav-links .link .link-icon {
+  width: 18px;
+  height: 18px;
+  color: inherit;
 }
 
 /* Basic styling for the content */
 #content {
   flex: 1; /* Grow to fill available space */
   padding: 20px;
+  margin-left: 260px;
+}
+
+main .page-heading {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  margin-bottom: 48px;
 }
 
 /* Basic styling for the footer */
@@ -29,72 +125,182 @@ footer {
   width: 100%;
 }
 
-.container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  min-height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Style the form */
 form {
-  width: 500px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+  margin: 48px 16px;
+  max-width: 500px;
+  width: 100%;
+  border-radius: 12px;
+  background-color: var(--color-surface);
+}
+
+form h2 {
+  width: 100%;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 20px;
+}
+
+form .form-group {
+  padding: 0px 16px;
+  margin-top: 16px;
+}
+
+form .action-btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0px 16px;
+  margin: 16px 0px;
+  grid-gap: 12px;
 }
 
 label {
   display: block;
-  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
 }
 
 /* Styling for form elements */
 input[type="text"],
 input[type="email"],
-button, textarea {
-  padding: 12px; /* Increased padding for better clickability */
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
+textarea {
+  width: 100%;
+  height: 32px;
+  border: 1px solid var(--color-border);
   border-radius: 5px;
-  font-size: 18px; /* Larger font size for better accessibility */
+  font-size: 14px;
+  padding: 12px;
 }
 
-input[type="text"],
-input[type="email"],
 textarea {
-  width: 95%;
+  min-height: 100px;
+  resize: none;
 }
 
 button {
-  background-color: #006ab4; /* Use brand color #006ab4 for buttons */
+  padding: 0px 12px;
+  height: 32px;
+  background-color: var(--color-primary);
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  font-size: 14px;
+  grid-gap: 6px;
 }
 
 button:hover {
-  background-color: #38d430; /* Use brand color #38d430 for button hover */
+  opacity: 0.8;
+}
+
+button.btn-secondary{
+  background-color: var(--color-border);
+  color: var(--color-text);
+}
+
+button.btn-danger{
+  background-color: var(--color-error);
+}
+
+.table-wrapper {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
+
+.table-controls {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.table-controls .search {
+  border: 1px solid var(--color-border);
+  padding: 0px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  border-radius: 4px;
+  grid-gap: 6px;
+}
+
+.table-controls .search input {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.table-controls .btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  grid-gap: 8px;
+}
+
+.table-controls .controls-btn {
+  border: 1px solid var(--color-border);
+  background-color: transparent;
+  color: var(--color-text);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  border: none;
+  border-radius: 8px;
 }
 
 /* Target only the <th> elements in the second row and remove border */
-tr:nth-of-type(2) th {
+/* tr:nth-of-type(2) th {
   border-bottom: none;
-}
+} */
 
-th, td {
-  padding: 12px; /* Increased padding for better readability */
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+tr {
+  border-top: 1px solid var(--color-border);
 }
 
 th {
-  background-color: #f2f2f2;
+  padding: 6px 16px;
+  text-align: left;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--color-text-muted);
 }
 
+td {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text);
+}
+td:last-child {
+  width: 70px;
+  display: flex;
+}

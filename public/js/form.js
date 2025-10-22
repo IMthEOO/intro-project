@@ -29,7 +29,7 @@ document.addEventListener( "DOMContentLoaded", async function() {
  * Hide all divs with class container and show main content
  */
 function closallforms() {
-  document.querySelectorAll( "div.container" ).forEach( ( element ) => {
+  document.querySelectorAll( "div.popup" ).forEach( ( element ) => {
     // @ts-ignore
     element.style.display = "none"
   } )
@@ -41,10 +41,10 @@ function closallforms() {
  * @param { string } formid 
  */
 export function showform( formid, onsubmit ) {
-  document.getElementById( "content" ).style.display = "none"
+  // document.getElementById( "content" ).style.display = "none"
 
   const form = document.getElementById( formid )
-  form.style.display = "block"
+  form.style.display = "flex"
 
   formsubmitcallback = onsubmit
 }
